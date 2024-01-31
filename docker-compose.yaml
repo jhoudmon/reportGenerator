@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+
+  reportGenerator:
+    container_name: reportGenerator
+    image: jetty:10.0.19-jdk17-alpine
+    ports:
+        - 8000:8080
+    environment:
+        JAVA_OPTIONS: "-DTEMPLATES_BASE_PATH=/templates"
+    volumes:
+        - ./target/reportGenerator.war:/var/lib/jetty/webapps/ROOT.war
+        - ./deploy/conf/server.ini:/var/lib/jetty/start.d/server.ini
+        - ${FONTS_DIR_PATH}:/var/lib/jetty/lib/ext
+        - ${TEMPLATES_BASE_PATH}:/templates
